@@ -1,0 +1,12 @@
+<agm-map 
+  [latitude]="lat" 
+  [longitude]="lng" 
+  [zoom]="zoom">
+
+  <agm-data-layer 
+    [geoJson]="geoJsonObject" 
+    layerClick="clickHandler($event)" 
+    [style]="styleFunc">
+  </agm-data-layer>
+
+</agm-map>
