@@ -5,7 +5,7 @@
 
   <agm-data-layer 
     [geoJson]="geoJsonObject" 
-    layerClick="clickHandler($event)" 
+    (layerClick)="clickHandler($event)" 
     [style]="styleFunc">
   </agm-data-layer>
 

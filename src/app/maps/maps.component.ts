@@ -13,26 +13,26 @@ export class MapsComponent implements OnInit {
   zoom: number = 5;
 
   geoJsonObject: Object = {
-    type: "FeatureCollection",
-    features: [
+    "type": "FeatureCollection",
+    "features": [
       {
-        geometry: {
-          coordinates: [40.851715, -74.423751],
-          type: "Point"
+        "geometry": {
+          "coordinates": [40.851715, -74.423751],
+          "type": "Point"
         },
-        type: "Feature",
-        properties: {
-          primaryName: "ZIMMER TRABECULAR METAL TECHNOLOGY"
+        "type": "Feature",
+        "properties": {
+          "primaryName": "ZIMMER TRABECULAR METAL TECHNOLOGY"
         }
       },
       {
-        geometry: {
-          coordinates: [42.885697, -76.966116],
-          type: "Point"
+        "geometry": {
+          "coordinates": [42.885697, -76.966116],
+          "type": "Point"
         },
-        type: "Feature",
-        properties: {
-          primaryName: "ZOTOS INTERNATIONAL"
+        "type": "Feature",
+        "properties": {
+          "primaryName": "ZOTOS INTERNATIONAL"
         }
       }
     ]
@@ -52,8 +52,7 @@ export class MapsComponent implements OnInit {
   styleFunc() {
     return {
       clickable: false,
-      fillColor: "red",
-      strokeWeight: 1
+      visible: true
     };
   }
 }
