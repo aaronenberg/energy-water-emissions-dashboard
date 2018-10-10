@@ -1,58 +1,48 @@
 import { Component, OnInit } from "@angular/core";
-import { MapdataService } from "./mapdata.service";
+import { MapsService } from "./maps.service";
+//import { MouseEvent as AGMMouseEvent } from "@agm/core";
 
 @Component({
   selector: "app-maps",
   templateUrl: "./maps.component.html",
-  styleUrls: ["./maps.component.css"]
-  //providers: [MapdataService]
+  styleUrls: ["./maps.component.css"],
+  providers: [MapsService]
 })
 export class MapsComponent implements OnInit {
   lat: number = 39.8;
   lng: number = -98.5;
   zoom: number = 5;
+  geoJsonObject: Object = null;
 
-  geoJsonObject: Object = {
-    "type": "FeatureCollection",
-    "features": [
-      {
-        "geometry": {
-          "coordinates": [40.851715, -74.423751],
-          "type": "Point"
-        },
-        "type": "Feature",
-        "properties": {
-          "primaryName": "ZIMMER TRABECULAR METAL TECHNOLOGY"
-        }
-      },
-      {
-        "geometry": {
-          "coordinates": [42.885697, -76.966116],
-          "type": "Point"
-        },
-        "type": "Feature",
-        "properties": {
-          "primaryName": "ZOTOS INTERNATIONAL"
-        }
-      }
-    ]
-  };
-  constructor(private mapDataService: MapdataService) {}
-  //getGeoJson(): void {
-  //  this.mapDataService
-  //    .getGeoJson()
-  //    .subscribe(geoJsonResponse => (this.geoJsonObject = geoJsonResponse));
-  //}
+  infowinLat: number = null;
+  infowinLng: number = null;
+  infowinMsg: string[] = ['', '', ''];
+  infowinIsOpen: boolean = false;
+
+  constructor(private mapsService: MapsService) {}
+
+  getGeoJson(): void {
+    this.mapsService
+      .getGeoJson()
+      .subscribe(geoJsonResponse => (this.geoJsonObject = geoJsonResponse));
+  }
+
   ngOnInit() {
-    //  this.getGeoJson();
+      this.getGeoJson();
   }
-  clickHandler(clickEvent) {
-    console.log(clickEvent);
+
+  clickHandler(event: AGMMouseEvent) {
+    //this.infowinLat = event.coords.lat;
+    //this.infowinLng = event.coords.lng;
+    console.log(event);
   }
-  styleFunc() {
+
+  styleFunc(feature) {
     return {
-      clickable: false,
-      visible: true
+      clickable: true,
+      visible: true,
+      icon: "../../assets/powerplant.png",
+      title: feature.getProperty('primaryName')
     };
   }
 }

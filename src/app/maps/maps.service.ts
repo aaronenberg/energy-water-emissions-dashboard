@@ -4,8 +4,8 @@ import { HttpClient } from "@angular/common/http";
 @Injectable({
   providedIn: "root"
 })
-export class MapdataService {
-  private url: string = "assets/FacilityCoordinates.json";
+export class MapsService {
+  private url: string = "../../assets/Facility.json";
 
   constructor(private http: HttpClient) {}
 
