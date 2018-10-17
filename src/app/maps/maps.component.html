@@ -5,9 +5,15 @@
     [zoom]="zoom">
 
     <agm-data-layer 
-      [geoJson]="geoJsonObject" 
-      (layerClick)="infoWindow.open();clickHandler($event)" 
-      [style]="styleFunc">
+      [geoJson]="facility_geojson" 
+      (layerClick)="infoWindow.open();click_handler($event)" 
+      [style]="facility_style">
+    </agm-data-layer>
+
+    <agm-data-layer 
+      [geoJson]="huc8_geojson" 
+      (layerClick)="infoWindow.open();click_handler($event)"
+     [style]="huc8_style">
     </agm-data-layer>
 
     <agm-info-window #infoWindow [isOpen]="infowinIsOpen" [latitude]="infowinLat" [longitude]="infowinLng">
