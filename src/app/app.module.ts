@@ -6,13 +6,13 @@ import { AppComponent } from "./app.component";
 import { MapsComponent } from "./maps/maps.component";
 import { AgmCoreModule } from "@agm/core";
 import { environment } from "../environments/environment";
-import { FacilityFormComponent } from './facility/facility-form.component';
+import { SearchFormComponent } from './facility/search-form.component';
 
 @NgModule({
   declarations: [
       AppComponent,
       MapsComponent,
-      FacilityFormComponent
+      SearchFormComponent
   ],
   imports: [
     BrowserModule,

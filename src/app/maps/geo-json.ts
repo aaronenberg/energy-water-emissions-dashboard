@@ -1,8 +1,8 @@
 export class GeoJson 
 {
-    private type    : string;
-    private bbox    : any[];
-    private features: Features[];
+    public type    : string;
+    public bbox    : any[];
+    public features: Features[];
 
     constructor()
     {
@@ -13,9 +13,9 @@ export class GeoJson
 
 export class Features 
 {
-    private type      : string;
-    private properties: any[];
-    private geometry  : Geometry;
+    public type      : string;
+    public properties: any[];
+    public geometry  : Geometry;
 
     constructor(properties, geometry)
     {
@@ -27,8 +27,8 @@ export class Features
 
 export class Geometry 
 {
-    private type       : string;
-    private coordinates: any[];
+    public type       : string;
+    public coordinates: any[];
 
     constructor(type, coordinates)
     {

@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
+import { GeoJson, Features, Geometry } from './geo-json';
 
 @Injectable({
   providedIn: "root"
@@ -7,18 +8,62 @@ import { HttpClient } from "@angular/common/http";
 export 
 class MapsService 
 {
-  private facility_geojson: string = "../../assets/Facility.json";
-  private huc8_geojson: string = "../../assets/huc8.json";
+    
 
-  constructor(private http: HttpClient) {}
 
-  get_facility_geojson()
-  {
-    return this.http.get(this.facility_geojson);
-  }
+    public facility_geojson: GeoJson = new GeoJson();
+    private huc8_geojson: string = null;
+    public huc_codes: any[] = null;
 
-  get_huc8_geojson()
-  {
-    return this.http.get(this.huc8_geojson);
-  }
+    constructor(private http: HttpClient) {}
+
+    get_facility_json(criteria, value, match, start_year, end_year)
+    {
+        return this.http.get("/ewedService/getFacility/" + 
+                             criteria + "/" + value + "/" +
+                             match + "/" + start_year + "/" +
+                             end_year);
+
+    }
+
+    public format_geojson(facilities: any[]): GeoJson {
+        this.facility_geojson.features = [];
+        facilities.forEach(facility => {
+            this.facility_geojson.features.push(
+                new Features(
+                    {
+                        primary_name: facility.PRIMARY_NAME,
+                        registry_id: facility.REGISTRY_ID,
+                        address: facility.LOCATION_ADDRESS,
+                        city: facility.CITY_NAME,
+                        state: facility.STATE_NAME,
+                        postal_code: facility.POSTAL_CODE,
+                        huc_code: facility.DERIVED_HUC,
+                        naics_code: facility.NAICS_CODE,
+                        fips_code: facility.FIPS_CODE
+                    },
+                new Geometry('Point',
+                             [Number(facility.LONGITUDE83),
+                              Number(facility.LATITUDE83)])
+              )
+          );
+      });
+      return JSON.parse(JSON.stringify(this.facility_geojson));
+    }
+
+    public get_huc_codes(facilities: any[]) {
+        this.huc_codes = [];
+        facilities.forEach(facility => {
+            if (this.huc_codes.indexOf(facility.DERIVED_HUC) === -1) {
+                this.huc_codes.push(facility.DERIVED_HUC)
+            }
+        });
+        return this.huc_codes;
+    }
+                        
+    get_huc8_geojson(huc_code)
+    {
+        this.huc8_geojson = "../../assets/huc8-boundary-layers/";
+        return this.http.get(this.huc8_geojson + huc_code + ".json");
+    }
 }
