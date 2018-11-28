@@ -1,10 +1,10 @@
 export class Search
 {
     constructor(
-        public criteria: string,
+        public filter: string,
         public value: string,
         public match: string,
-        public start_year: number,
-        public end_year:   number
+        public year_start: number,
+        public year_end: number
     ){}
 }

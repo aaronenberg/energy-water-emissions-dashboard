@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { GeoJson, Features, Geometry } from './geo-json';
+import { Search } from '../facility/search';
 
 @Injectable({
   providedIn: "root"
@@ -17,16 +18,17 @@ class MapsService
 
     constructor(private http: HttpClient) {}
 
-    get_facility_json(criteria, value, match, start_year, end_year)
+    get_facility_json(search: Search)
     {
         return this.http.get("/ewedService/getFacility/" + 
-                             criteria + "/" + value + "/" +
-                             match + "/" + start_year + "/" +
-                             end_year);
+                             search.filter + "/" + search.value + "/" +
+                             search.match + "/" + search.year_start + "/" +
+                             search.year_end);
 
     }
 
-    public format_geojson(facilities: any[]): GeoJson {
+    public format_geojson(facilities: any[]): GeoJson
+    {
         this.facility_geojson.features = [];
         facilities.forEach(facility => {
             this.facility_geojson.features.push(
@@ -51,7 +53,8 @@ class MapsService
       return JSON.parse(JSON.stringify(this.facility_geojson));
     }
 
-    public get_huc_codes(facilities: any[]) {
+    public get_huc_codes(facilities: any[])
+    {
         this.huc_codes = [];
         facilities.forEach(facility => {
             if (this.huc_codes.indexOf(facility.DERIVED_HUC) === -1) {
@@ -60,7 +63,12 @@ class MapsService
         });
         return this.huc_codes;
     }
-                        
+
+    public get_huc_code(facilities: any[])
+    {
+        return facilities[0].DERIVED_HUC;
+    }
+
     get_huc8_geojson(huc_code)
     {
         this.huc8_geojson = "../../assets/huc8-boundary-layers/";
